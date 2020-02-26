@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="css/mui.min.css">
+	<style>
+		*{
+			font-size: 16px;
+			background-color: white;
+		}
+		
+		.drc_row_center{
+			display: flex;
+			display: -webkit-flex;
+			width: 100%;
+			height: auto;
+			align-items: center;
+			justify-content: center;
+			flex-direction: row;
+		}
+		
+		.margin_top_20px{
+			margin-top: 1.25rem;
+		}
+		
+		.margin_left_15px{
+			margin-left: 0.9375rem;
+		}
+		
+		.margin_right_15px{
+			margin-right: 0.9375rem;
+			}
+		
+		.margin_left_10px{
+			margin-left: 0.625rem;
+		}
+		
+		.mui-scroll-wrapper{
+			border-radius: 0.625rem;
+		}
+		
+		/**   分割线   **/
+		#container{
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: column;
+			width: 100%;
+			height: auto;
+		}
+		
+		.milantitle{
+			margin-top: 0.9375rem;
+			font-size: 20px;
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 2.5rem;
+		}
+		
+		
+		.username_flex{
+			display: flex;
+			display: -webkit-flex;
+			width: 80%;
+			flex-direction: row;
+			border: 0.0625rem solid #bcbcbc;
+			border-radius: 0.3125rem;
+			height: 2.5rem;
+			align-items: center;
+		}
+		
+		.username{
+			height: 1.3125rem;
+		}
+		
+		.username_flex input{
+			margin-left: 0.625rem;
+			border-width: 0;
+			outline: none;
+			font-size: 1rem;
+			height: 1.3125rem;
+			line-height: 1.3125rem;
+			vertical-align: middle;
+		}
+		
+		.vegetabledish_flex{
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: row;
+			height: 2.5rem;
+			width: 90%;
+			border: 0.0625rem solid #bcbcbc;
+			border-radius: 0.3125rem;
+			align-items: center;
+			justify-content: space-between;
+		}
+		
+		.vegetabledish_flex img{
+			width: 1.25rem;
+			height: 1.25rem;
+			margin-right:0.625rem;
+		}
+		
+		.masker{
+			position: absolute;
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			width: 100%;
+			background-color: #3333335c;
+		}
+		
+		.dialog{
+			position: relative;
+			display: flex;
+			display: -webkit-flex;
+			align-items: center;
+			justify-content: center;
+			height: 55%;
+			width: 80%;
+			background-color: white;
+			border-radius: 0.625rem;
+		}
+		.dialog_img_closed{
+			background-color: transparent;
+			position: absolute;
+			bottom: 5.625rem;
+			width: 2.375rem;
+			height: 2.375rem;
+		}
+	</style>
+    <title>吃货</title>
+	<div id="container">
+		<div class="milantitle">
+			吃货点餐
+		</div>
+		
+		<div class="drc_row_center margin_top_20px">
+			<div class="username_flex">
+				<span class="margin_left_15px username">姓名:</span>
+				<input id="usernameinput"  placeholder="请输入姓名" />
+			</div>
+		</div>
+		
+		<div class="drc_row_center margin_top_20px">
+			<div class="vegetabledish_flex" onclick="menuFunction(0)">
+				<span class="margin_left_15px">素菜1选择</span>
+				<img src="./img/icon_right.png" />
+			</div>
+		</div>
+		
+		<div class="drc_row_center margin_top_20px">
+			<div class="vegetabledish_flex" onclick="menuFunction(1)">
+				<span class="margin_left_15px">素菜2选择</span>
+				<img src="./img/icon_right.png" />
+			</div>
+		</div>
+		
+		<div class="drc_row_center margin_top_20px">
+			<div class="vegetabledish_flex" onclick="menuFunction(2)">
+				<span class="margin_left_15px">荤菜1选择</span>
+				<img src="./img/icon_right.png" />
+			</div>
+		</div>
+		
+		<div class="drc_row_center margin_top_20px">
+			<div class="vegetabledish_flex" onclick="menuFunction(3)">
+				<span class="margin_left_15px">荤菜2选择</span>
+				<img src="./img/icon_right.png" />
+			</div>
+		</div>
+		
+		
+		<div class="masker">
+			<div class="dialog">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell"><a href="#">Item1</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item2</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item3</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item4</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item5</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item6</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item7</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item8</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item9</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#">Item10</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+			
+			<img class="dialog_img_closed" src="img/icon_close.png" />
+		</div>
+	</div>
+	<script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="./js/mui.min.js"></script>
+    <script type="text/javascript">
+	     mui.init();
+		mui.plusReady(function () {});
+		mui('.mui-scroll-wrapper').scroll();
+		
+		//素菜
+		var vegetableDishList1=["白菜","茄子","西红柿","土豆"];
+		var vegetableDishList2=[];
+		//荤菜
+		var meatDishesList1=["猪肉","牛肉","羊肉","蛙肉"];
+		var meatDishesList2=[];
+   		$(function(){
+			
+		})
+   		
+		/**
+		 * 菜单选择
+		 */
+		function menuFunction(index){
+			if(index ==0){
+				console.log("我是素菜1");
+			}else if(index == 1){
+					console.log("我是素菜2");
+			}else if(index == 2){
+					console.log("我是荤菜1");
+			}else{
+				console.log("我是荤菜2");
+			}
+		}
+    </script>
+</head>
+<body>
+	
+</body>
+</html>
