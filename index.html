@@ -129,7 +129,7 @@
 			display: -webkit-flex;
 			align-items: center;
 			justify-content: center;
-			height: 55%;
+			height: 60%;
 			width: 80%;
 			background-color: white;
 			border-radius: 0.625rem;
@@ -202,10 +202,38 @@
 			display: flex;
 			display: -webkit-flex;
 			flex-direction: column;
-			font-size: 0.75rem;
 			color: #999999;
 			margin-left: 1.25rem;
 			margin-top: 0.625rem;
+		}
+		
+		.matter_list span{
+			font-size: 0.75rem !important;
+		}
+		
+		.check_lunch{
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: row;
+			margin-top: 0.625rem;
+			margin-left: 1.25rem;
+		}
+		.check_lunch span{
+			color: dodgerblue;
+			font-size: 0.75rem !important;
+		}
+		
+		.checkpeople{
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: row;
+			justify-content: space-between;
+			width: 100%;
+		}
+		
+		.checkpeople a{
+			background-color: transparent !important;
+			font-size: 0.875rem;
 		}
 	</style>
     <title>吃货</title>
@@ -282,28 +310,33 @@
 		 <span>1、1个名字只能使用1次，请用真名，请勿重复提交</span>
 		 <span class="margin_top_5px">2、投票最高就是今天中午要吃的，如果票数都相等，就从已选里面随机抽取</span>
 	 </div>
+	 <div class="check_lunch"><span id="checktodaylunch">查看今日午餐</span> <span class="margin_left_15px" onclick="checkTodayPeople()">查看已点餐人员名单</span></div>
 	</div>
 	<script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="./js/mui.min.js"></script>
     <script type="text/javascript">
 	    mui.init();
 		mui('.mui-scroll-wrapper').scroll();
-		//素菜选中项目
-		var chosedVegetableDishIndex1=0;
-		var chosedVegetableDishIndex2=0;
+		var todayLunchText="午餐肉";
+		var todayPersonnelList=[];//已点餐人员 格式：张三  土豆、西蓝花 + 牛肉、猪肉
 		
-		//荤菜选中项目
-		var chosedMeatDishesIndex1=0;
-		var chosedMeatDishesIndex2=0;
+		var isRefresh = false;//是否正在加载数据
 		
 		//素菜
-		var vegetableDishList1=["白菜","茄子","西红柿","土豆"];
-		var vegetableDishList2=["白菜","茄子","西红柿","土豆"];
-		//荤菜
-		var meatDishesList1=["猪肉","牛肉","羊肉","蛙肉"];
-		var meatDishesList2=["猪肉","牛肉","羊肉","蛙肉"];
+		var vegetableDishList1=["小炒藕片","酸辣土豆丝","麻辣豆腐","茄子豆角","凉瓜炒蛋","韭菜炒蛋","蒜蓉炒时蔬"
+		,"酸辣大白菜","清炒笋丝","果仁菠菜","凉拌青瓜","酸辣清瓜条","番茄炒蛋","素炒冬瓜","虎皮青椒","炒南瓜",
+		"手撕包菜","蒸水蛋","凉拌西蓝花","凉拌木耳","清炒花菜"];
+		var vegetableDishList2=[];
+		vegetableDishList2 = vegetableDishList2.concat(vegetableDishList1);
 		
-		//生产对象
+		//荤菜
+		var meatDishesList1=["梅菜扣肉","啤酒鸭","清远白切鸡","秘制红烧鱼","大塘烧鸭","奥尔良鸡趴","卤水鸡腿",
+		"红烧狮子头","青椒炒鹅肠","农家一碗香","香菇滑鸡","肉饼蛋","椒盐虾","农家小炒肉","肉沫茄子","清蒸鲩鱼",
+		"土豆回锅肉","酸辣藕片","青椒火腿炒蛋","洋葱炒肉丸","青瓜炒火腿","七彩玉米粒","土豆焖鸭","辣子鸡","山药炒肉片"];
+		var meatDishesList2=[];
+		meatDishesList2 = meatDishesList2.concat(meatDishesList1);
+		
+		//生产对象===================
 		//素菜
 		var vegetableDishObjectList1=[];
 		var vegetableDishObjectList2=[];
@@ -311,6 +344,17 @@
 		var meatDishesObjectList1=[];
 		var meatDishesObjectList2=[];
    		$(function(){
+			//测试假点餐人
+			var diancan1 = new Object();
+			diancan1.name="张三";
+			diancan1.menuName="土豆、西蓝花 + 牛肉、猪肉"
+			todayPersonnelList.push(diancan1);
+			var diancan2 = new Object();
+			diancan2.name="王五";
+			diancan2.menuName="番茄、茄子 + 红烧肉、鸭肉"
+			todayPersonnelList.push(diancan2);
+			
+			
 			for(var i=0;i<vegetableDishList1.length;i++){
 				var item = new Object();
 				item.parentIndex=0;
@@ -344,7 +388,26 @@
 			}
 			//默认隐藏dialog
 			$("#dialogmasker").hide();
-		})
+			
+			//查看今日午餐
+			$("#checktodaylunch").click(function(){
+				if(todayLunchText!=""){
+					mui.alert(todayLunchText, function() {});
+				}
+			})
+		});
+		
+		/**
+		 * 查看今日已点餐人员
+		 */
+		function checkTodayPeople(){
+			var html="";
+			for(var i=0;i<todayPersonnelList.length;i++){
+				html = html + "<li class='mui-table-view-cell checkpeople'><a>"+todayPersonnelList[i].name+"</a><a>"+todayPersonnelList[i].menuName+"</a></li>"
+			}
+			$("#mui_tableview_list").html(html);
+			$("#dialogmasker").show();
+		}
 		
 		
 		/**
@@ -407,14 +470,25 @@
 					list[i].chosed = false;
 				}
 			}
+			
+			if(item.parentIndex == 0){
+				vegetableDishObjectList1 = list;
+			}else if(item.parentIndex == 1){
+				vegetableDishObjectList2 = list;
+			}else if(item.parentIndex == 2){
+				meatDishesObjectList1 = list;
+			}else if(item.parentIndex == 3){
+				meatDishesObjectList2 = list;
+			}
+	
 			$("#dialogmasker").hide();
 		}
 		
 		mui(document.body).on('tap', '.mui-btn', function(e) {
 			//判断用户名字是否输入
 			var userName = $("#usernameinput").val();
-			if(userName.replace(/(^s*)|(s*$)/g, "").length ==0){
-				alert("名字不能为空");
+			if(userName==""){
+				mui.toast('名字不能为空');
 				return;
 			}
 			
@@ -423,11 +497,12 @@
 			
 			var meatDishesText1="";
 			var meatDishesText2="";
+			
 			for(var i=0;i<vegetableDishObjectList1.length;i++){
 				var item = vegetableDishObjectList1[i];
 				if(item.chosed){
 					vegetableDishText1 = item.menumName;
-					break
+					break;
 				}
 			}
 			
@@ -435,23 +510,23 @@
 				var item = vegetableDishObjectList2[i];
 				if(item.chosed){
 					vegetableDishText2 = item.menumName;
-					break
+					break;
 				}
 			}
 			
-			for(var i=0;i<meatdishes1.length;i++){
-				var item = meatdishes1[i];
+			for(var i=0;i<meatDishesObjectList1.length;i++){
+				var item = meatDishesObjectList1[i];
 				if(item.chosed){
 					meatDishesText1 = item.menumName;
-					break
+					break;
 				}
 			}
 			
-			for(var i=0;i<meatdishes2.length;i++){
-				var item = meatdishes2[i];
+			for(var i=0;i<meatDishesObjectList2.length;i++){
+				var item = meatDishesObjectList2[i];
 				if(item.chosed){
 					meatDishesText2 = item.menumName;
-					break
+					break;
 				}
 			}
 			
@@ -460,35 +535,40 @@
 		   setTimeout(function() {
 		        mui(this).button('reset');
 		    }.bind(this), 2000); */
-			
+				
 			//获取选中的项
 			sendPostRequest(vegetableDishText1,vegetableDishText2,meatDishesText1,meatDishesText2,userName);
 		});
-		
-		//发送请求
+
+		//提交吃饭数据
 		function sendPostRequest(vegetableDishText1,vegetableDishText2,meatDishesText1,meatDishesText2,userName){
-				if(vegetableDishText1.replace(/(^s*)|(s*$)/g, "").length ==0){
-					alert("素材1不能为空");
+				if(isRefresh){
+					return;
+				}
+				isRefresh = true;
+				if(vegetableDishText1==""){
+					mui.toast('素材1不能为空');
 					return;
 				}
 				
-				if(vegetableDishText2.replace(/(^s*)|(s*$)/g, "").length ==0){
-					alert("素材2不能为空");
+				if(vegetableDishText2==""){
+					mui.toast('素材2不能为空');
 					return;
 				}
 				
-				if(meatDishesText1.replace(/(^s*)|(s*$)/g, "").length ==0){
-					alert("荤菜1不能为空");
-					return;
-				
-				
-				if(meatDishesText2.replace(/(^s*)|(s*$)/g, "").length ==0){
-					alert("荤菜2不能为空");
+				if(meatDishesText1==""){
+					mui.toast('荤菜1不能为空');
 					return;
 				}
 				
-				 mui(this).button('loading');
-				 
+				
+				if(meatDishesText2==""){
+					mui.toast('荤菜2不能为空');
+					return;
+				}
+				
+				mui('.mui-btn').button('loading');
+				
 		
 				 var postData = JSON.stringify({
 					 'menu':vegetableDishText1+"_"+vegetableDishText2+"X"+meatDishesText1+"_"+meatDishesText2,
@@ -504,16 +584,18 @@
 				     type: "POST",
 				     dataType: "json",
 				     success: function(data) {
-						 alert("提交成功");
-				          mui(this).button('reset');
+						 isRefresh = false;
+						 mui.toast('提交成功');
+				          mui('.mui-btn').button('reset');
 				     },
 					 error:function(data) {
-						  alert("提交失败");
-				          mui(this).button('reset');
+						 isRefresh = false;
+						 mui.toast('提交失败');
+				         mui('.mui-btn').button('reset');
 				     }
 				});
-		}
 	}
+	
     </script>
 </head>
 <body>
