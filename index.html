@@ -5,7 +5,8 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<link rel="stylesheet" href="css/mui.min.css">
+	<link rel="stylesheet" href="./css/mui.min.css">
+	<link rel="stylesheet" href="./css/app.css" />
 	<style>
 		*{
 			font-size: 16px;
@@ -137,6 +138,56 @@
 			width: 2.375rem;
 			height: 2.375rem;
 		}
+		
+		.cancle_submit{
+			margin-top: 1.25rem;
+			background-color: transparent;
+			display: flex;
+			display: -webkit-flex;
+			width: 80%;
+			flex-direction: row;
+			height: 3.125rem;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.cancle_submit img{
+			height: 2.375rem;
+			width: 2.375rem;
+			background-color: transparent;
+		}
+		
+		.mui-btn-block{
+			display: flex;
+			display: -webkit-flex;
+			align-items: center;
+			justify-content: center;
+			width: 6.25rem;
+			height: 2.5rem;
+			border-radius: 0.3125rem;
+			padding: 0px 0px;
+			margin-bottom: 0px;
+		}
+		
+		.subbmit_div{
+			margin-top: 3.125rem;
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 3.125rem;
+		}
+		
+		.subbmit{
+			width: 80%;
+			height: 2.8125rem;
+		}
+		
+		.subbmit span{
+			background-color: transparent;
+		}
 	</style>
     <title>吃货</title>
 	<div id="container">
@@ -154,6 +205,7 @@
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(0)">
 				<span class="margin_left_15px">素菜1选择</span>
+				<span id="vegetabledish1"></span>
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
@@ -161,6 +213,7 @@
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(1)">
 				<span class="margin_left_15px">素菜2选择</span>
+				<span id="vegetabledish2"></span>
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
@@ -168,6 +221,7 @@
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(2)">
 				<span class="margin_left_15px">荤菜1选择</span>
+				<span id="meatdishes1"></span>
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
@@ -175,76 +229,154 @@
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(3)">
 				<span class="margin_left_15px">荤菜2选择</span>
+				<span id="meatdishes2"></span>
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
 		
 		
-		<div class="masker">
+		<div class="masker" id="dialogmasker">
 			<div class="dialog">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell"><a href="#">Item1</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item2</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item3</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item4</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item5</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item6</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item7</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item8</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item9</a>
-							</li>
-							<li class="mui-table-view-cell"><a href="#">Item10</a>
-							</li>
+						<ul class="mui-table-view" id="mui_tableview_list">
+							<!-- <li class="mui-table-view-cell" onclick="dishname(0)"><a href="#">Item1</a></li> -->
 						</ul>
 					</div>
 				</div>
 				
 			</div>
 			
-			<img class="dialog_img_closed" src="img/icon_close.png" />
+			<div class="cancle_submit">
+				<!-- <button type="button" class="mui-btn mui-btn-block" onclick="dialogClick(0)">取消</button>
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="dialogClick(1)">确定</button> -->
+				<img src="img/icon_closed.png" onclick="dialogClick(0)"/>
+			</div>
 		</div>
+		
+		<div class="subbmit_div">
+			<button type="button" class="subbmit mui-btn mui-btn-block mui-btn-primary">确认</button>
+		</div>
+	
 	</div>
 	<script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="./js/mui.min.js"></script>
     <script type="text/javascript">
-	     mui.init();
-		mui.plusReady(function () {});
+	    mui.init();
 		mui('.mui-scroll-wrapper').scroll();
+		//素菜选中项目
+		var chosedVegetableDishIndex1=0;
+		var chosedVegetableDishIndex2=0;
+		
+		//荤菜选中项目
+		var chosedMeatDishesIndex1=0;
+		var chosedMeatDishesIndex2=0;
 		
 		//素菜
 		var vegetableDishList1=["白菜","茄子","西红柿","土豆"];
-		var vegetableDishList2=[];
+		var vegetableDishList2=["白菜","茄子","西红柿","土豆"];
 		//荤菜
 		var meatDishesList1=["猪肉","牛肉","羊肉","蛙肉"];
-		var meatDishesList2=[];
+		var meatDishesList2=["猪肉","牛肉","羊肉","蛙肉"];
+		
+		//生产对象
+		//素菜
+		var vegetableDishObjectList1=[];
+		var vegetableDishObjectList2=[];
+		//荤菜
+		var meatDishesObjectList1=[];
+		var meatDishesObjectList2=[];
    		$(function(){
+			for(var i=0;i<vegetableDishList1.length;i++){
+				var item = new Object();
+				item.parentIndex=0;
+				item.menumName=vegetableDishList1[i];
+				vegetableDishObjectList1.push(item);
+			}
 			
+			for(var i=0;i<vegetableDishList2.length;i++){
+				var item = new Object();
+				item.parentIndex=1;
+				item.menumName=vegetableDishList2[i];
+				vegetableDishObjectList2.push(item);
+			}
+			
+			for(var i=0;i<meatDishesList1.length;i++){
+				var item = new Object();
+				item.parentIndex=2;
+				item.menumName=meatDishesList1[i];
+				meatDishesObjectList1.push(item);
+			}
+			
+			for(var i=0;i<meatDishesList2.length;i++){
+				var item = new Object();
+				item.parentIndex=3;
+				item.menumName=meatDishesList2[i];
+				meatDishesObjectList2.push(item);
+			}
+			//默认隐藏dialog
+			$("#dialogmasker").hide();
 		})
+		
+		
+		/**
+		 * dialog 点击事件
+		 */
+		function dialogClick(index){
+			if(index == 0){//取消
+				
+			}else{//确定
+				
+			}
+			$("#dialogmasker").hide();
+		}
    		
 		/**
 		 * 菜单选择
 		 */
 		function menuFunction(index){
+			var list = [];
 			if(index ==0){
-				console.log("我是素菜1");
+				list=list.concat(vegetableDishObjectList1);
 			}else if(index == 1){
-					console.log("我是素菜2");
+				list=list.concat(vegetableDishObjectList2);
 			}else if(index == 2){
-					console.log("我是荤菜1");
-			}else{
-				console.log("我是荤菜2");
+				list=list.concat(meatDishesObjectList1);
+			}else if(index == 3){
+				list=list.concat(meatDishesObjectList2);
 			}
+			//<li class="mui-table-view-cell" onclick="dishname(0)"><a href="#">Item1</a></li>
+			var html="";
+			for(var i=0;i<list.length;i++){
+				html = html + "<li class='mui-table-view-cell' onclick=dishname("+ JSON.stringify(list[i]).replace(/\"/g,"'") +")><a href='#'>"+list[i].menumName+"</a></li>"
+			}
+			$("#mui_tableview_list").html(html);
+			$("#dialogmasker").show();
 		}
+		
+		/**
+		 * 菜名选取
+		 */
+		function dishname(item){
+			if(item.parentIndex == 0){//素菜1
+				$("#vegetabledish1").text(item.menumName);
+			}else if(item.parentIndex == 1){//素菜2
+				$("#vegetabledish2").text(item.menumName);
+			}else if(item.parentIndex == 2){
+				$("#meatdishes1").text(item.menumName);
+			}else if(item.parentIndex == 3){
+				$("#meatdishes2").text(item.menumName);
+			}
+			$("#dialogmasker").hide();
+		}
+		
+		mui(document.body).on('tap', '.mui-btn', function(e) {
+		    mui(this).button('loading');
+			//请求服务器
+		   setTimeout(function() {
+		        mui(this).button('reset');
+		    }.bind(this), 2000);
+		});
     </script>
 </head>
 <body>
