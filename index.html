@@ -314,6 +314,7 @@
 	</div>
 	<script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="./js/mui.min.js"></script>
+	<script type="text/javascript" src="./js/request.js"></script>
     <script type="text/javascript">
 	    mui.init();
 		mui('.mui-scroll-wrapper').scroll();
@@ -323,14 +324,14 @@
 		var isRefresh = false;//是否正在加载数据
 		
 		//素菜
-		var vegetableDishList1=["小炒藕片","酸辣土豆丝","麻辣豆腐","茄子豆角","凉瓜炒蛋","韭菜炒蛋","蒜蓉炒时蔬"
+		var vegetableDishList1=["随便","小炒藕片","酸辣土豆丝","麻辣豆腐","茄子豆角","凉瓜炒蛋","韭菜炒蛋","蒜蓉炒时蔬"
 		,"酸辣大白菜","清炒笋丝","果仁菠菜","凉拌青瓜","酸辣清瓜条","番茄炒蛋","素炒冬瓜","虎皮青椒","炒南瓜",
 		"手撕包菜","蒸水蛋","凉拌西蓝花","凉拌木耳","清炒花菜"];
 		var vegetableDishList2=[];
 		vegetableDishList2 = vegetableDishList2.concat(vegetableDishList1);
 		
 		//荤菜
-		var meatDishesList1=["梅菜扣肉","啤酒鸭","清远白切鸡","秘制红烧鱼","大塘烧鸭","奥尔良鸡趴","卤水鸡腿",
+		var meatDishesList1=["随便","梅菜扣肉","啤酒鸭","清远白切鸡","秘制红烧鱼","大塘烧鸭","奥尔良鸡趴","卤水鸡腿",
 		"红烧狮子头","青椒炒鹅肠","农家一碗香","香菇滑鸡","肉饼蛋","椒盐虾","农家小炒肉","肉沫茄子","清蒸鲩鱼",
 		"土豆回锅肉","酸辣藕片","青椒火腿炒蛋","洋葱炒肉丸","青瓜炒火腿","七彩玉米粒","土豆焖鸭","辣子鸡","山药炒肉片"];
 		var meatDishesList2=[];
@@ -575,25 +576,17 @@
 					 'name':userName
 				 })
 				 
-				 $.ajax({
-				     url: "/greet",
-				     data: postData,
-					 contentType : 'application/json;charset=utf-8', //设置请求头信息
-					 timeout:30000,
-					 cache:false,
-				     type: "POST",
-				     dataType: "json",
-				     success: function(data) {
-						 isRefresh = false;
-						 mui.toast('提交成功');
-				          mui('.mui-btn').button('reset');
-				     },
-					 error:function(data) {
-						 isRefresh = false;
-						 mui.toast('提交失败');
-				         mui('.mui-btn').button('reset');
-				     }
-				});
+				 //发送post请求
+				 postRequest("commit",postData,function(data){
+					 isRefresh = false;
+					 mui.toast('提交成功');
+					 mui('.mui-btn').button('reset');
+				 },function(dataType){
+					 isRefresh = false;
+					 mui.toast('提交失败');
+					 mui('.mui-btn').button('reset');
+				 });
+		
 	}
 	
     </script>
