@@ -91,6 +91,8 @@
 			height: 1.3125rem;
 			line-height: 1.3125rem;
 			vertical-align: middle;
+			flex: 1;
+			margin-bottom: 0rem;
 		}
 		
 		.vegetabledish_flex{
@@ -112,7 +114,8 @@
 		}
 		
 		.masker{
-			position: absolute;
+			position: fixed;
+			z-index: 100;
 			display: flex;
 			display: -webkit-flex;
 			flex-direction: column;
@@ -120,7 +123,11 @@
 			justify-content: center;
 			height: 100%;
 			width: 100%;
-			background-color: #3333335c;
+			background :rgba(0,0,0,.4);
+			top:0px;
+			left:0px;
+			right:0px;
+			bottom:0px;
 		}
 		
 		.dialog{
@@ -245,7 +252,7 @@
 		<div class="drc_row_center margin_top_20px">
 			<div class="username_flex">
 				<span class="margin_left_15px username">姓名:</span>
-				<input id="usernameinput"  placeholder="请输入姓名" />
+				<input id="usernameinput" type="text"  placeholder="请输入姓名" />
 			</div>
 		</div>
 		
@@ -343,6 +350,8 @@
 		//荤菜
 		var meatDishesObjectList1=[];
 		var meatDishesObjectList2=[];
+		
+		
    		$(function(){
 			//测试假点餐人
 			var diancan1 = new Object();
