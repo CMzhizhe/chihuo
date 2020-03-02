@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>历史记录</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css"  />
+		<link rel="stylesheet" href="../css/app.css"  />
+		<link rel="stylesheet" href="../css/mui.picker.min.css" />
+		<style type="text/css">
+			body,html{
+				font-size: 16px;
+				background-color: white;
+			}
+			
+			.color_blue{
+				color: dodgerblue;
+			}
+			
+			.margin_left_15px{
+				margin-left: 0.9375rem;
+			}
+			
+			.margin_right_15px{
+				margin-right: 0.9375rem;
+				}
+			
+			.margin_left_10px{
+				margin-left: 0.625rem;
+			}
+			
+			.margin_right_10px{
+				margin-right: 0.625rem;
+			}
+			
+			
+			/**   分割线   **/
+			
+			
+			#container{
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: column;
+				width: 100%;
+				height: auto;
+			}
+			
+			.header{
+				position: fixed;
+				top: 0px;
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: row;
+				align-items: center;
+				width: 100%;
+				height: 2.75rem;
+				background-color: dodgerblue;
+			}
+			
+			.titlename{
+				margin-left: 0.3125rem;
+				background-color: transparent;
+				color: white;
+				font-size: 1.125rem;
+			}
+			
+			.ivback{
+				display: flex;
+				display: -webkit-flex;
+				align-items: center;
+				justify-content: center;
+				width: auto;
+				height: 100%;
+				margin-left: 0.9375rem;
+				background: transparent;
+			}
+			
+			.ivback img{
+				width: 1.75rem;
+				height: 1.75rem;
+				background: transparent;
+			}
+			
+			.titlediv{
+				margin-top: 3.0625rem;
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: row;
+				justify-content: space-around;
+				width: 100%;
+				height: 2.1875rem;
+				align-items: center;
+			}
+			
+			.startendtime{
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: row;
+				width: auto;
+				height: 100%;
+				align-items: center;
+			}
+			
+			.titlediv span{
+				font-size: 0.875rem;
+			}
+			
+			.searchdiv{
+				background-color: transparent;
+				position: fixed;
+				bottom: 0.9375rem;
+				height: 2.8125rem;
+				display: flex;
+				display: -webkit-flex;
+				width: 100%;
+				align-items: center;
+				justify-content: center;
+			}
+			
+			.searchdiv button{
+				width: 80%;
+				height: 2.1875rem;
+			}
+			
+			.searchdiv span{
+				background-color: transparent;
+			}
+			
+			.contentdiv{
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: column;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.content_name{
+				margin-left: 0.625rem;
+				margin-right: 0.625rem;
+				border-bottom: 1px solid #c8c7cc;
+				display: flex;
+				display: -webkit-flex;
+				flex-direction: row;
+				align-items: center;
+				height: 2.8125rem;
+				width: auto;
+			}
+			
+			.sml_name{
+				margin-top: 0.625rem;
+				width: 100%;
+				height: auto;
+				flex-direction: row;
+				flex-wrap: wrap;
+				display: flex;
+				display: -webkit-flex;
+				margin-bottom: 5rem;
+			}
+			
+			.numname{
+				margin-left: 0.625rem;
+				font-size: 0.875rem;
+			}
+			
+			.mui-dtpicker-body{
+				background-color: transparent;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="container">
+			<div class="header">
+				<div class="mui-action-back ivback" >
+					<img src="../img/icon_back_white.png" />
+					<span class="titlename">历史记录</span>
+				</div>
+			</div>
+			<div class="titlediv">
+				<div class="startendtime " onclick="startEndTimeFunction(0)" >
+					<span >开始时间：</span>
+					<span id="satarttime" class="color_blue">2018-02-06</span>
+				</div>
+				
+				<div class="startendtime " onclick="startEndTimeFunction(1)" >
+					<span >结束时间：</span>
+					<span id="endtime" class="color_blue">2018-02-06</span>
+				</div>
+			</div>
+			<div class="contentdiv" id="contentdiv">
+				<!-- <span class="content_name">张三</span> -->
+			</div>
+			
+			<div class="searchdiv">
+				<button type="button" class="mui-btn mui-btn-primary" data-loading-text = "查询中" data-loading-icon-position="right">确认</button>
+			</div>
+			
+			<div class="sml_name" id="sml_name">
+				<!-- <span class="numname">
+					张三x3
+				</span> -->
+			</div>
+			
+		</div>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/request.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var isRefresh = false;
+			var startTimeText="";
+			var endTimeText="";
+			//开始时间
+			 var dtPickerStart = new mui.DtPicker(JSON.parse('{"type":"date"}')); 
+			 //结束时间
+			 var dtPickerEnd = new mui.DtPicker(JSON.parse('{"type":"date"}')); 
+			
+			var nameList=[];//点餐人的集合 [{name:"张三"},{name:"李四"}]
+			var bottomNameStatisticsList=[];//底部统计 [{name:"张三",num:3},{name:"李四",num:4}]
+			$(function(){
+				startTimeText = getNowDate();
+				endTimeText = getNowDate();
+				$("#satarttime").text(startTimeText);
+				$("#endtime").text(endTimeText);
+				
+				//测试的假数据
+				var name1 = new Object();
+				name1.name="张三";
+				var name2 = new Object();
+				name2.name="李四";
+				nameList.push(name1);
+				nameList.push(name2);
+				var html = "";
+				for (var i = 0; i < nameList.length; i++) {
+					html = html + "<span class='content_name'>"+nameList[i].name+"</span>"
+				}
+				$("#contentdiv").html(html);
+				
+				//底部人统计
+				var bottomNum1 = new Object();
+				bottomNum1.name="张三";
+				bottomNum1.num=1;
+				var bottomNum2 = new Object();
+				bottomNum2.name="李四";
+				bottomNum2.num=1;
+				bottomNameStatisticsList.push(bottomNum1);
+				bottomNameStatisticsList.push(bottomNum2);
+				var html2="";
+				for (var i = 0; i < bottomNameStatisticsList.length; i++) {
+					html2 = html2 + "<span class='numname'>"+bottomNameStatisticsList[i].name+'x'+bottomNameStatisticsList[i].num+"</span>"
+				}
+				$("#sml_name").html(html2);
+				
+				readHistoryData();
+			});
+			
+			/**
+			 * 获取当前的时间
+			 */
+			function getNowDate(){
+				// 获取当前日期
+				var date = new Date();
+				// 获取当前月份
+				var nowMonth = date.getMonth() + 1;
+				// 获取当前是几号
+				var strDate = date.getDate();
+				// 添加分隔符“-”
+				var seperator = "-";
+				// 对月份进行处理，1-9月在前面添加一个“0”
+				if (nowMonth >= 1 && nowMonth <= 9) {
+				   nowMonth = "0" + nowMonth;
+				}
+				// 对月份进行处理，1-9号在前面添加一个“0”
+				if (strDate >= 0 && strDate <= 9) {
+				   strDate = "0" + strDate;
+				}
+				return date.getFullYear() + seperator + nowMonth + seperator + strDate;
+			}
+			
+			/**
+			 * 开始时间，结束时间点击相应
+			 * @param {int} index 0 开始时间  1 结束时间
+			 */
+			function startEndTimeFunction(index){
+				if(index ==0){//开始时间
+					dtPickerStart.show(function(selectItems){
+						startTimeText = selectItems.text;
+						$("#satarttime").text(startTimeText);
+					});
+				}else{//结束时间
+					dtPickerEnd.show(function(selectItems){
+						endTimeText = selectItems.text
+						$("#endtime").text(endTimeText);
+					});
+				}
+			}
+			
+			
+			/**
+			 * 确定的监听
+			 */
+			mui(document.body).on('tap', '.mui-btn', function(e) {
+				if(isRefresh){
+					return;
+				}
+				readHistoryData();
+			});
+			
+			
+			
+			
+			/**
+			 * 查看记录
+			 */
+			function readHistoryData(){
+				var oDate1 = new Date(startTimeText);//开始时间
+				var oDate2 = new Date(endTimeText);//结束时间
+				if(oDate2.getTime() < oDate1.getTime()){
+				  mui.toast('结束时间要>开始时间');
+				  isRefresh = false;
+				   return;
+			    } 
+				
+				var postData = {
+					'startTime': startTimeText,
+					'endTime': endTimeText
+				}
+				
+				isRefresh = true;
+				mui('.mui-btn').button('loading');
+				//发送post请求
+				postRequest("commit", postData, function(data) {
+					//这里处理数据结果
+					
+					isRefresh = false;
+					mui('.mui-btn').button('reset');
+				}, function(data) {
+					isRefresh = false;
+					mui('.mui-btn').button('reset');
+				});
+			}
+			
+		</script>
+	</body>
+
+</html>

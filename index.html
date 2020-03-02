@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<link rel="stylesheet" href="./css/mui.min.css">
-	<link rel="stylesheet" href="./css/app.css" />
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="./css/mui.min.css">
+		<link rel="stylesheet" href="./css/app.css" />
+	</head>
 	<style>
 		*{
 			font-size: 16px;
@@ -187,12 +188,12 @@
 			align-items: center;
 			justify-content: center;
 			width: 100%;
-			height: 3.125rem;
+			height: 2.1875rem;
 		}
 		
 		.subbmit{
 			width: 80%;
-			height: 2.8125rem;
+			height: 2.1875rem;
 		}
 		
 		.subbmit span{
@@ -224,6 +225,7 @@
 			flex-direction: row;
 			margin-top: 0.625rem;
 			margin-left: 1.25rem;
+			margin-bottom: 0.625rem;
 		}
 		.check_lunch span{
 			color: dodgerblue;
@@ -242,20 +244,22 @@
 			background-color: transparent !important;
 			font-size: 0.875rem;
 		}
+		
+		
 	</style>
-    <title>吃货</title>
+	<title>吃货</title>
 	<div id="container">
 		<div class="milantitle">
 			吃货点餐
 		</div>
-		
+
 		<div class="drc_row_center margin_top_20px">
 			<div class="username_flex">
 				<span class="margin_left_15px username">姓名:</span>
-				<input id="usernameinput" type="text"  placeholder="请输入姓名" />
+				<input id="usernameinput" type="text" placeholder="请输入姓名" />
 			</div>
 		</div>
-		
+
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(0)">
 				<span class="margin_left_15px">素菜1选择</span>
@@ -263,7 +267,7 @@
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
-		
+
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(1)">
 				<span class="margin_left_15px">素菜2选择</span>
@@ -271,7 +275,7 @@
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
-		
+
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(2)">
 				<span class="margin_left_15px">荤菜1选择</span>
@@ -279,7 +283,7 @@
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
-		
+
 		<div class="drc_row_center margin_top_20px">
 			<div class="vegetabledish_flex" onclick="menuFunction(3)">
 				<span class="margin_left_15px">荤菜2选择</span>
@@ -287,8 +291,8 @@
 				<img src="./img/icon_right.png" />
 			</div>
 		</div>
-		
-		
+
+
 		<div class="masker" id="dialogmasker">
 			<div class="dialog">
 				<div class="mui-scroll-wrapper">
@@ -298,309 +302,335 @@
 						</ul>
 					</div>
 				</div>
-				
+
 			</div>
-			
+
 			<div class="cancle_submit">
 				<!-- <button type="button" class="mui-btn mui-btn-block" onclick="dialogClick(0)">取消</button>
 				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="dialogClick(1)">确定</button> -->
-				<img src="img/icon_closed.png" onclick="dialogClick(0)"/>
+				<img src="img/icon_closed.png" onclick="dialogClick(0)" />
 			</div>
 		</div>
-		
+
 		<div class="subbmit_div">
 			<button type="button" class="subbmit mui-btn mui-btn-block mui-btn-primary">确认</button>
 		</div>
-	
-	 <span class="be_card">注意</span>
-	 <div class="matter_list">
-		 <span>1、1个名字只能使用1次，请用真名，请勿重复提交</span>
-		 <span class="margin_top_5px">2、投票最高就是今天中午要吃的，如果票数都相等，就从已选里面随机抽取</span>
-	 </div>
-	 <div class="check_lunch"><span id="checktodaylunch">查看今日午餐</span> <span class="margin_left_15px" onclick="checkTodayPeople()">查看已点餐人员名单</span></div>
+
+		<span class="be_card">注意</span>
+		<div class="matter_list">
+			<span>1、1个名字只能使用1次，请用真名，请勿重复提交</span>
+			<span class="margin_top_5px">2、投票最高就是今天中午要吃的，如果票数都相等，就从已选里面随机抽取</span>
+		</div>
+		<div class="check_lunch">
+			<span id="checktodaylunch">查看今日午餐</span>
+			<span class="margin_left_15px" onclick="checkTodayPeople()">查看已点餐人员名单</span>
+			<span class="margin_left_15px" onclick="historicalRecord()">历史记录</span>
+		</div>
 	</div>
 	<script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="./js/mui.min.js"></script>
 	<script type="text/javascript" src="./js/request.js"></script>
-    <script type="text/javascript">
-	    mui.init();
+	<script type="text/javascript">
+		mui.init();
 		mui('.mui-scroll-wrapper').scroll();
-		var todayLunchText="午餐肉";
-		var todayPersonnelList=[];//已点餐人员 格式：张三  土豆、西蓝花 + 牛肉、猪肉
-		
-		var isRefresh = false;//是否正在加载数据
-		
+		var todayLunchText = "午餐肉";
+		var todayPersonnelList = []; //已点餐人员 格式：张三  土豆、西蓝花 + 牛肉、猪肉
+
+		var isRefresh = false; //是否正在加载数据
+
 		//素菜
-		var vegetableDishList1=["随便","小炒藕片","酸辣土豆丝","麻辣豆腐","茄子豆角","凉瓜炒蛋","韭菜炒蛋","蒜蓉炒时蔬"
-		,"酸辣大白菜","清炒笋丝","果仁菠菜","凉拌青瓜","酸辣清瓜条","番茄炒蛋","素炒冬瓜","虎皮青椒","炒南瓜",
-		"手撕包菜","蒸水蛋","凉拌西蓝花","凉拌木耳","清炒花菜"];
-		var vegetableDishList2=[];
+		var vegetableDishList1 = ["随便", "小炒藕片", "酸辣土豆丝", "麻辣豆腐", "茄子豆角", "凉瓜炒蛋", "韭菜炒蛋", "蒜蓉炒时蔬", "酸辣大白菜", "清炒笋丝", "果仁菠菜",
+			"凉拌青瓜", "酸辣清瓜条", "番茄炒蛋", "素炒冬瓜", "虎皮青椒", "炒南瓜",
+			"手撕包菜", "蒸水蛋", "凉拌西蓝花", "凉拌木耳", "清炒花菜"
+		];
+		var vegetableDishList2 = [];
 		vegetableDishList2 = vegetableDishList2.concat(vegetableDishList1);
-		
+
 		//荤菜
-		var meatDishesList1=["随便","梅菜扣肉","啤酒鸭","清远白切鸡","秘制红烧鱼","大塘烧鸭","奥尔良鸡趴","卤水鸡腿",
-		"红烧狮子头","青椒炒鹅肠","农家一碗香","香菇滑鸡","肉饼蛋","椒盐虾","农家小炒肉","肉沫茄子","清蒸鲩鱼",
-		"土豆回锅肉","酸辣藕片","青椒火腿炒蛋","洋葱炒肉丸","青瓜炒火腿","七彩玉米粒","土豆焖鸭","辣子鸡","山药炒肉片"];
-		var meatDishesList2=[];
+		var meatDishesList1 = ["随便", "梅菜扣肉", "啤酒鸭", "清远白切鸡", "秘制红烧鱼", "大塘烧鸭", "奥尔良鸡趴", "卤水鸡腿",
+			"红烧狮子头", "青椒炒鹅肠", "农家一碗香", "香菇滑鸡", "肉饼蛋", "椒盐虾", "农家小炒肉", "肉沫茄子", "清蒸鲩鱼",
+			"土豆回锅肉", "酸辣藕片", "青椒火腿炒蛋", "洋葱炒肉丸", "青瓜炒火腿", "七彩玉米粒", "土豆焖鸭", "辣子鸡", "山药炒肉片"
+		];
+		var meatDishesList2 = [];
 		meatDishesList2 = meatDishesList2.concat(meatDishesList1);
-		
+
 		//生产对象===================
 		//素菜
-		var vegetableDishObjectList1=[];
-		var vegetableDishObjectList2=[];
+		var vegetableDishObjectList1 = [];
+		var vegetableDishObjectList2 = [];
 		//荤菜
-		var meatDishesObjectList1=[];
-		var meatDishesObjectList2=[];
-		
-		
-   		$(function(){
+		var meatDishesObjectList1 = [];
+		var meatDishesObjectList2 = [];
+
+
+		$(function() {
 			//测试假点餐人
 			var diancan1 = new Object();
-			diancan1.name="张三";
-			diancan1.menuName="土豆、西蓝花 + 牛肉、猪肉"
+			diancan1.name = "张三";
+			diancan1.menuName = "土豆、西蓝花 + 牛肉、猪肉"
 			todayPersonnelList.push(diancan1);
 			var diancan2 = new Object();
-			diancan2.name="王五";
-			diancan2.menuName="番茄、茄子 + 红烧肉、鸭肉"
+			diancan2.name = "王五";
+			diancan2.menuName = "番茄、茄子 + 红烧肉、鸭肉"
 			todayPersonnelList.push(diancan2);
-			
-			
-			for(var i=0;i<vegetableDishList1.length;i++){
+
+
+			for (var i = 0; i < vegetableDishList1.length; i++) {
 				var item = new Object();
-				item.parentIndex=0;
-				item.menumName=vegetableDishList1[i];
+				item.parentIndex = 0;
+				item.menumName = vegetableDishList1[i];
 				item.chosed = false;
 				vegetableDishObjectList1.push(item);
 			}
-			
-			for(var i=0;i<vegetableDishList2.length;i++){
+
+			for (var i = 0; i < vegetableDishList2.length; i++) {
 				var item = new Object();
-				item.parentIndex=1;
-				item.menumName=vegetableDishList2[i];
+				item.parentIndex = 1;
+				item.menumName = vegetableDishList2[i];
 				item.chosed = false;
 				vegetableDishObjectList2.push(item);
 			}
-			
-			for(var i=0;i<meatDishesList1.length;i++){
+
+			for (var i = 0; i < meatDishesList1.length; i++) {
 				var item = new Object();
-				item.parentIndex=2;
-				item.menumName=meatDishesList1[i];
+				item.parentIndex = 2;
+				item.menumName = meatDishesList1[i];
 				item.chosed = false;
 				meatDishesObjectList1.push(item);
 			}
-			
-			for(var i=0;i<meatDishesList2.length;i++){
+
+			for (var i = 0; i < meatDishesList2.length; i++) {
 				var item = new Object();
-				item.parentIndex=3;
-				item.menumName=meatDishesList2[i];
+				item.parentIndex = 3;
+				item.menumName = meatDishesList2[i];
 				item.chosed = false;
 				meatDishesObjectList2.push(item);
 			}
 			//默认隐藏dialog
 			$("#dialogmasker").hide();
-			
+
 			//查看今日午餐
-			$("#checktodaylunch").click(function(){
-				if(todayLunchText!=""){
-					mui.alert(todayLunchText, function() {});
+			$("#checktodaylunch").click(function() {
+				if (todayLunchText != "") {
+					var btnArray = ['否', '确定(复制)'];
+					mui.confirm(todayLunchText, '提示', btnArray, function(e) {
+						if (e.index == 1) {//确定
+							var input = document.createElement("input");
+							input.value = todayLunchText;
+							document.body.appendChild(input);
+							input.select();
+							input.setSelectionRange(0, input.value.length), document.execCommand('Copy');
+							document.body.removeChild(input);
+							mui.toast('复制成功');
+						} 
+					});
+					
 				}
 			})
 		});
-		
+
 		/**
 		 * 查看今日已点餐人员
 		 */
-		function checkTodayPeople(){
-			var html="";
-			for(var i=0;i<todayPersonnelList.length;i++){
-				html = html + "<li class='mui-table-view-cell checkpeople'><a>"+todayPersonnelList[i].name+"</a><a>"+todayPersonnelList[i].menuName+"</a></li>"
+		function checkTodayPeople() {
+			var html = "";
+			for (var i = 0; i < todayPersonnelList.length; i++) {
+				html = html + "<li class='mui-table-view-cell checkpeople'><a>" + todayPersonnelList[i].name + "</a><a>" +
+					todayPersonnelList[i].menuName + "</a></li>"
 			}
 			$("#mui_tableview_list").html(html);
 			$("#dialogmasker").show();
 		}
-		
-		
+
+
 		/**
 		 * dialog 点击事件
 		 */
-		function dialogClick(index){
-			if(index == 0){//取消
-				
-			}else{//确定
-				
+		function dialogClick(index) {
+			if (index == 0) { //取消
+
+			} else { //确定
+
 			}
 			$("#dialogmasker").hide();
 		}
-   		
+
 		/**
 		 * 菜单选择
 		 */
-		function menuFunction(index){
+		function menuFunction(index) {
 			var list = [];
-			if(index ==0){
-				list=list.concat(vegetableDishObjectList1);
-			}else if(index == 1){
-				list=list.concat(vegetableDishObjectList2);
-			}else if(index == 2){
-				list=list.concat(meatDishesObjectList1);
-			}else if(index == 3){
-				list=list.concat(meatDishesObjectList2);
+			if (index == 0) {
+				list = list.concat(vegetableDishObjectList1);
+			} else if (index == 1) {
+				list = list.concat(vegetableDishObjectList2);
+			} else if (index == 2) {
+				list = list.concat(meatDishesObjectList1);
+			} else if (index == 3) {
+				list = list.concat(meatDishesObjectList2);
 			}
 			//<li class="mui-table-view-cell" onclick="dishname(0)"><a href="#">Item1</a></li>
-			var html="";
-			for(var i=0;i<list.length;i++){
-				html = html + "<li class='mui-table-view-cell' onclick=dishname("+ JSON.stringify(list[i]).replace(/\"/g,"'") +")><a href='#'>"+list[i].menumName+"</a></li>"
+			var html = "";
+			for (var i = 0; i < list.length; i++) {
+				html = html + "<li class='mui-table-view-cell' onclick=dishname(" + JSON.stringify(list[i]).replace(/\"/g, "'") +
+					")><a href='#'>" + list[i].menumName + "</a></li>"
 			}
 			$("#mui_tableview_list").html(html);
 			$("#dialogmasker").show();
 		}
-		
+
 		/**
 		 * 菜名选取
 		 */
-		function dishname(item){
+		function dishname(item) {
 			var list = [];
-			if(item.parentIndex == 0){//素菜1
-				list=list.concat(vegetableDishObjectList1);
+			if (item.parentIndex == 0) { //素菜1
+				list = list.concat(vegetableDishObjectList1);
 				$("#vegetabledish1").text(item.menumName);
-			}else if(item.parentIndex == 1){//素菜2
-				list=list.concat(vegetableDishObjectList2);
+			} else if (item.parentIndex == 1) { //素菜2
+				list = list.concat(vegetableDishObjectList2);
 				$("#vegetabledish2").text(item.menumName);
-			}else if(item.parentIndex == 2){
-				list=list.concat(meatDishesObjectList1);
+			} else if (item.parentIndex == 2) {
+				list = list.concat(meatDishesObjectList1);
 				$("#meatdishes1").text(item.menumName);
-			}else if(item.parentIndex == 3){
-				list=list.concat(meatDishesObjectList2);
+			} else if (item.parentIndex == 3) {
+				list = list.concat(meatDishesObjectList2);
 				$("#meatdishes2").text(item.menumName);
 			}
-			for(var i=0;i<list.length;i++){
-				if(list[i].menumName == item.menumName){
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].menumName == item.menumName) {
 					list[i].chosed = true;
-				}else{
+				} else {
 					list[i].chosed = false;
 				}
 			}
-			
-			if(item.parentIndex == 0){
+
+			if (item.parentIndex == 0) {
 				vegetableDishObjectList1 = list;
-			}else if(item.parentIndex == 1){
+			} else if (item.parentIndex == 1) {
 				vegetableDishObjectList2 = list;
-			}else if(item.parentIndex == 2){
+			} else if (item.parentIndex == 2) {
 				meatDishesObjectList1 = list;
-			}else if(item.parentIndex == 3){
+			} else if (item.parentIndex == 3) {
 				meatDishesObjectList2 = list;
 			}
-	
+
 			$("#dialogmasker").hide();
 		}
-		
+
 		mui(document.body).on('tap', '.mui-btn', function(e) {
 			//判断用户名字是否输入
 			var userName = $("#usernameinput").val();
-			if(userName==""){
+			if (userName == "") {
 				mui.toast('名字不能为空');
 				return;
 			}
-			
+
 			var vegetableDishText1 = "";
 			var vegetableDishText2 = "";
-			
-			var meatDishesText1="";
-			var meatDishesText2="";
-			
-			for(var i=0;i<vegetableDishObjectList1.length;i++){
+
+			var meatDishesText1 = "";
+			var meatDishesText2 = "";
+
+			for (var i = 0; i < vegetableDishObjectList1.length; i++) {
 				var item = vegetableDishObjectList1[i];
-				if(item.chosed){
+				if (item.chosed) {
 					vegetableDishText1 = item.menumName;
 					break;
 				}
 			}
-			
-			for(var i=0;i<vegetableDishObjectList2.length;i++){
+
+			for (var i = 0; i < vegetableDishObjectList2.length; i++) {
 				var item = vegetableDishObjectList2[i];
-				if(item.chosed){
+				if (item.chosed) {
 					vegetableDishText2 = item.menumName;
 					break;
 				}
 			}
-			
-			for(var i=0;i<meatDishesObjectList1.length;i++){
+
+			for (var i = 0; i < meatDishesObjectList1.length; i++) {
 				var item = meatDishesObjectList1[i];
-				if(item.chosed){
+				if (item.chosed) {
 					meatDishesText1 = item.menumName;
 					break;
 				}
 			}
-			
-			for(var i=0;i<meatDishesObjectList2.length;i++){
+
+			for (var i = 0; i < meatDishesObjectList2.length; i++) {
 				var item = meatDishesObjectList2[i];
-				if(item.chosed){
+				if (item.chosed) {
 					meatDishesText2 = item.menumName;
 					break;
 				}
 			}
-			
-		  /*  mui(this).button('loading');
+
+			/*  mui(this).button('loading');
 			//请求服务器
 		   setTimeout(function() {
 		        mui(this).button('reset');
 		    }.bind(this), 2000); */
-				
+
 			//获取选中的项
-			sendPostRequest(vegetableDishText1,vegetableDishText2,meatDishesText1,meatDishesText2,userName);
+			sendPostRequest(vegetableDishText1, vegetableDishText2, meatDishesText1, meatDishesText2, userName);
 		});
 
 		//提交吃饭数据
-		function sendPostRequest(vegetableDishText1,vegetableDishText2,meatDishesText1,meatDishesText2,userName){
-				if(isRefresh){
-					return;
-				}
-				isRefresh = true;
-				if(vegetableDishText1==""){
-					mui.toast('素材1不能为空');
-					return;
-				}
-				
-				if(vegetableDishText2==""){
-					mui.toast('素材2不能为空');
-					return;
-				}
-				
-				if(meatDishesText1==""){
-					mui.toast('荤菜1不能为空');
-					return;
-				}
-				
-				
-				if(meatDishesText2==""){
-					mui.toast('荤菜2不能为空');
-					return;
-				}
-				
-				mui('.mui-btn').button('loading');
-				
-		
-				 var postData = JSON.stringify({
-					 'menu':vegetableDishText1+"_"+vegetableDishText2+"X"+meatDishesText1+"_"+meatDishesText2,
-					 'name':userName
-				 })
-				 
-				 //发送post请求
-				 postRequest("commit",postData,function(data){
-					 isRefresh = false;
-					 mui.toast('提交成功');
-					 mui('.mui-btn').button('reset');
-				 },function(dataType){
-					 isRefresh = false;
-					 mui.toast('提交失败');
-					 mui('.mui-btn').button('reset');
-				 });
-		
+		function sendPostRequest(vegetableDishText1, vegetableDishText2, meatDishesText1, meatDishesText2, userName) {
+			if (isRefresh) {
+				return;
+			}
+			isRefresh = true;
+			if (vegetableDishText1 == "") {
+				mui.toast('素材1不能为空');
+				return;
+			}
+
+			if (vegetableDishText2 == "") {
+				mui.toast('素材2不能为空');
+				return;
+			}
+
+			if (meatDishesText1 == "") {
+				mui.toast('荤菜1不能为空');
+				return;
+			}
+
+
+			if (meatDishesText2 == "") {
+				mui.toast('荤菜2不能为空');
+				return;
+			}
+
+			mui('.mui-btn').button('loading');
+
+
+			var postData = JSON.stringify({
+				'menu': vegetableDishText1 + "_" + vegetableDishText2 + "X" + meatDishesText1 + "_" + meatDishesText2,
+				'name': userName
+			})
+
+			//发送post请求
+			postRequest("commit", postData, function(data) {
+				isRefresh = false;
+				mui.toast('提交成功');
+				mui('.mui-btn').button('reset');
+			}, function(dataType) {
+				isRefresh = false;
+				mui.toast('提交失败');
+				mui('.mui-btn').button('reset');
+			});
+
 		}
-	
-    </script>
-</head>
-<body>
-	
-</body>
+
+		/**
+		 * 查看历史记录
+		 */
+		function historicalRecord() {
+			window.location.href='./html/historicalRecord.html';
+		}
+	</script>
+
+	<body>
+
+	</body>
 </html>
